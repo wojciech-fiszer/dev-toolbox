@@ -21,8 +21,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "aws s3 sync ./build s3://$S3_BUCKET/",
-    "update-aws-stack": "aws cloudformation update-stack --stack-name dev-toolbox --template-body file://cloud-formation-template.json "
+    "deploy": "./aws/deploy-app.sh",
+    "create-aws-stack": "./aws/create-stack.sh",
+    "update-aws-stack": "./aws/update-stack.sh",
+    "delete-aws-stack": "./aws/delete-stack.sh"
   },
   "eslintConfig": {
     "extends": [
