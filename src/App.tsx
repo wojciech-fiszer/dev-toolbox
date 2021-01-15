@@ -1,15 +1,18 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import {Grid, ThemeProvider} from "@material-ui/core";
+import theme from "./theme";
+import Header from "./components/Header";
 
-function App() {
-    return (
-        <>
-            <CssBaseline/>
-            <div>
-                This is dev-toolbox!
-            </div>
-        </>
-    );
-}
+const App = () => (
+    <ThemeProvider theme={theme}>
+        <Grid container direction="column">
+            <Grid item>
+                <Header/>
+            </Grid>
+            <Grid item container>
+            </Grid>
+        </Grid>
+    </ThemeProvider>
+);
 
 export default App;
