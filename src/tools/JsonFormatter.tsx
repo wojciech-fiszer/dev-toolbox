@@ -8,15 +8,15 @@ const JsonFormatter = () => {
     const [parsedJson, setParsedJson] = useState<any>();
     const [formattedJson, setFormattedJson] = useState<string>("");
     const [parsingError, setParsingError] = useState<string>("");
-    const [template, setTemplate] = useState<string>("2")
+    const [tabSpaces, setTabSpaces] = useState<number>(2)
 
     useEffect(() => {
         if (!parsedJson) {
             setFormattedJson("");
             return;
         }
-        setFormattedJson(JSON.stringify(parsedJson, null, +template));
-    }, [parsedJson, template])
+        setFormattedJson(JSON.stringify(parsedJson, null, tabSpaces));
+    }, [parsedJson, tabSpaces])
 
     const handleRawJsonChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const value = event.target.value;
@@ -44,13 +44,13 @@ const JsonFormatter = () => {
         <Grid container direction="column" spacing={2}>
             <Grid container spacing={2} item>
                 <Grid item xs={6}>
-                    <InputLabel id="json-template-select-label">JSON template</InputLabel>
+                    <InputLabel id="format-select-label">Format</InputLabel>
                     <Select
-                        labelId="json-template-select-label"
-                        id="json-template-select"
+                        labelId="format-select-label"
+                        id="format-select"
                         fullWidth
-                        value={template}
-                        onChange={event => setTemplate(event.target.value as string)}
+                        value={tabSpaces}
+                        onChange={event => setTabSpaces(+(event.target.value as string))}
                     >
                         <MenuItem value="2">2 space tab</MenuItem>
                         <MenuItem value="3">3 space tab</MenuItem>
