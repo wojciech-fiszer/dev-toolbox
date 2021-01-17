@@ -19,7 +19,7 @@ const Menu = ({onClick}: Props) => {
     return (
         <List component="nav" className={classes.list}>
             {tools.map(tool => (
-                <ListItem button>
+                <ListItem key={tool.id} button>
                     <ListItemText primary={tool.name} onClick={() => onClick(tool)}/>
                 </ListItem>
             ))}
