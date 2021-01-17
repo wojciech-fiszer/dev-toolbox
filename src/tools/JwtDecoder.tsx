@@ -8,9 +8,6 @@ import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 const TOKEN_TEXT_FIELD_ROWS = 24;
 
 const useStyles = makeStyles(() => ({
-    textField: {
-        width: "100%"
-    },
     verificationControlWrapper: {
         display: "flex",
         alignItems: "center",
@@ -28,19 +25,24 @@ const useStyles = makeStyles(() => ({
 }));
 
 const JwtDecoder = () => {
+    const classes = useStyles();
     const [encoded, setEncoded] = useState<string>();
-    const [decoded, setDecoded] = useState<{ [p: string]: any } | null | undefined>();
+    const [decoded, setDecoded] = useState<{ [p: string]: any } | undefined>();
+    const [decodingError, setDecodingError] = useState<string>();
     const [verified, setVerified] = useState<boolean>();
     const [secretOrPrivateKey, setSecretOrPrivateKey] = useState<string>();
     const [secretOrPrivateKeyError, setSecretOrPrivateKeyError] = useState<string>();
+    const decodedTextFieldValue = decoded ? JSON.stringify(decoded, null, 2) : "";
+
     useEffect(() => setVerified(undefined), [encoded]);
     useEffect(() => setSecretOrPrivateKeyError(undefined), [secretOrPrivateKey]);
-    const classes = useStyles();
+
     const handleEncodedTokenTextFieldChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const value = event.target.value;
         setEncoded(value);
         if (!value) {
             setDecoded(undefined);
+            setDecodingError(undefined);
             return;
         }
         let decoded: { [p: string]: any } | null;
@@ -50,10 +52,14 @@ const JwtDecoder = () => {
                 json: true
             })
         } catch (error) {
-            decoded = null;
+            setDecoded(undefined);
+            setDecodingError(error.message);
+            return;
         }
-        setDecoded(decoded);
+        setDecoded(decoded || undefined);
+        setDecodingError(decoded ? undefined : "Invalid token");
     };
+
     const handleVerifyButtonClick = () => {
         if (!encoded) {
             return;
@@ -70,36 +76,31 @@ const JwtDecoder = () => {
         }
         setVerified(true);
     };
-    const decodedTextFieldValue =
-        decoded === undefined
-            ? ""
-            : decoded === null
-            ? "Invalid token"
-            : JSON.stringify(decoded, null, 2);
+
     return (
         <Grid container direction="column" spacing={2}>
             <Grid container spacing={2} item>
                 <Grid item xs={6}>
                     <TextField
-                        className={classes.textField}
                         label="Encoded"
                         multiline
+                        fullWidth
                         rows={TOKEN_TEXT_FIELD_ROWS}
                         variant="outlined"
                         value={encoded}
-                        error={decoded === null}
+                        error={!!decodingError}
+                        helperText={decodingError}
                         onChange={handleEncodedTokenTextFieldChange}
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <TextField
-                        className={classes.textField}
                         label="Decoded"
                         multiline
+                        fullWidth
                         rows={TOKEN_TEXT_FIELD_ROWS}
                         variant="outlined"
                         value={decodedTextFieldValue}
-                        error={decoded === null}
                         onChange={() => {
                             // read only text field
                         }}
@@ -109,9 +110,9 @@ const JwtDecoder = () => {
             {decoded && (<Grid container spacing={2} item>
                 <Grid item xs={6}>
                     <TextField
-                        className={classes.textField}
                         label={decoded.header.alg.startsWith("HS") ? "Secret" : "Private key"}
                         multiline
+                        fullWidth
                         rows={4}
                         variant="outlined"
                         value={secretOrPrivateKey}
