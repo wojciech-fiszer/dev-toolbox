@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, Grid, TextField, Typography} from "@material-ui/core";
+import {Button, Grid, TextField, Typography} from "@material-ui/core";
 import jwt from 'jsonwebtoken';
 import {makeStyles} from "@material-ui/styles";
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
@@ -125,15 +125,11 @@ const JwtDecoder = () => {
                     <Button color="primary" onClick={handleVerifyButtonClick}>Verify</Button>
                     {typeof verified === 'boolean' && verified &&
                     <div className={`${classes.verificationResultWrapper} ${classes.success}`}>
-                        <Box p={1}>
-                        </Box>
                         <CheckCircleOutlineIcon/>
                         <Typography>Verification succeed</Typography>
                     </div>}
                     {typeof verified === 'boolean' && !verified &&
                     <div className={`${classes.verificationResultWrapper} ${classes.failure}`}>
-                        <Box p={1}>
-                        </Box>
                         <CancelOutlinedIcon/>
                         <Typography>Verification failed</Typography>
                     </div>}
