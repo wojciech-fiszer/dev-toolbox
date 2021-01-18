@@ -122,7 +122,12 @@ const JwtDecoder = () => {
                     />
                 </Grid>
                 <Grid item xs={6} className={classes.verificationControlWrapper}>
-                    <Button color="primary" onClick={handleVerifyButtonClick}>Verify</Button>
+                    <Button color="primary"
+                            onClick={handleVerifyButtonClick}
+                            disabled={!secretOrPrivateKey || !!secretOrPrivateKeyError}
+                    >
+                        Verify
+                    </Button>
                     {typeof verified === 'boolean' && verified &&
                     <div className={`${classes.verificationResultWrapper} ${classes.success}`}>
                         <CheckCircleOutlineIcon/>
