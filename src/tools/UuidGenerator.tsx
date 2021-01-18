@@ -10,10 +10,6 @@ const UuidGenerator = () => {
     const [namespace, setNamespace] = useState<string>("");
     const [namespaceError, setNamespaceError] = useState<string>("");
     const [uuids, setUuids] = useState<string[]>();
-    const validAmountInput = !amountError;
-    const validNamespaceInput = !(version === "v3" || version === "v5") || (namespace && !namespaceError);
-    const validInputs = validAmountInput && validNamespaceInput;
-    const uuidsTextFieldValue = uuids?.join("\n") || "";
 
     const handleAmountChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const value = event.target.value;
@@ -29,7 +25,10 @@ const UuidGenerator = () => {
     };
 
     const handleGenerateButtonClick = () => {
-        if (!validInputs) {
+        if (amountError) {
+            return;
+        }
+        if ((version === "v3" || version === "v5") && namespaceError) {
             return;
         }
         const uuids = [];
@@ -107,13 +106,7 @@ const UuidGenerator = () => {
                     />}
                 </Grid>
                 <Grid item xs={2}>
-                    <Button
-                        color="primary"
-                        onClick={handleGenerateButtonClick}
-                        disabled={!validInputs}
-                    >
-                        Generate
-                    </Button>
+                    <Button color="primary" onClick={handleGenerateButtonClick}>Generate</Button>
                 </Grid>
             </Grid>
             <Grid item>
@@ -123,7 +116,7 @@ const UuidGenerator = () => {
                     fullWidth
                     rows={24}
                     variant="outlined"
-                    value={uuidsTextFieldValue}
+                    value={uuids?.join("\n") || ""}
                     onChange={() => {
                         // read only text field
                     }}
