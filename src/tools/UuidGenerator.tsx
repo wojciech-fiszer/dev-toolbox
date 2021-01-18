@@ -28,8 +28,14 @@ const UuidGenerator = () => {
         if (amountError) {
             return;
         }
-        if ((version === "v3" || version === "v5") && namespaceError) {
-            return;
+        if (version === "v3" || version === "v5") {
+            if (namespaceError) {
+                return;
+            }
+            if (!namespace) {
+                setNamespaceError("Required");
+                return;
+            }
         }
         const uuids = [];
         for (let i = 0; i < +amount; i++) {
