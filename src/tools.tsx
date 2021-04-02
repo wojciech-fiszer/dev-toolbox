@@ -3,6 +3,7 @@ import JwtDecoder from "./tools/JwtDecoder";
 import JsonFormatter from "./tools/JsonFormatter";
 import UuidGenerator from "./tools/UuidGenerator";
 import Base64Encoder from "./tools/Base64Encoder";
+import UrlParser from "./tools/UrlParser";
 
 const tools: Tool[] = [
     {
@@ -24,6 +25,11 @@ const tools: Tool[] = [
         id: "base64-encoder",
         name: "Base64 encoder",
         render: () => <Base64Encoder/>
+    },
+    {
+        id: "url-parser",
+        name: "URL parser",
+        render: () => <UrlParser/>
     }
 ];
 
