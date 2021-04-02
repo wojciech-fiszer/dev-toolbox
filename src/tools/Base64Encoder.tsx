@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Grid, TextField} from "@material-ui/core";
 
-const TEXT_FIELD_ROWS = 24;
+const TEXT_FIELD_ROWS = 26;
 
 const Base64Encoder = () => {
     const [text, setText] = useState("");
