@@ -6,6 +6,7 @@ import Menu from "./components/Menu";
 import {Tool} from "./Tool";
 import {makeStyles} from "@material-ui/styles";
 import ToolLayout from "./components/ToolLayout";
+import tools from "./tools";
 
 const useStyles = makeStyles(() => ({
     toolContainer: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
     const classes = useStyles();
-    const [selectedTool, setSelectedTool] = useState<Tool>();
+    const [selectedTool, setSelectedTool] = useState<Tool>(tools[0]);
     return (
         <ThemeProvider theme={theme}>
             <Grid container direction="column">
@@ -27,13 +28,11 @@ const App = () => {
                 </Grid>
                 <Grid item className={classes.content}>
                     <Menu onClick={setSelectedTool}/>
-                    {selectedTool &&
                     <Container className={classes.toolContainer}>
                         <ToolLayout title={selectedTool.name}>
                             {selectedTool.render()}
                         </ToolLayout>
                     </Container>
-                    }
                 </Grid>
             </Grid>
         </ThemeProvider>
