@@ -26,11 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "./aws/deploy-app.sh",
-    "create-aws-stack": "./aws/create-stack.sh",
-    "update-aws-stack": "./aws/update-stack.sh",
-    "delete-aws-stack": "./aws/delete-stack.sh"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
